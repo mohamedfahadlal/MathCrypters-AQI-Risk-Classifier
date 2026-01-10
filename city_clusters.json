@@ -1,0 +1,184 @@
+[
+  {
+    "City": "Ahmedabad",
+    "lat": 23.0225,
+    "lon": 72.5714,
+    "mean_aqi": 291.71908893709326,
+    "AQI_Category": "Poor"
+  },
+  {
+    "City": "Aizawl",
+    "lat": 23.7271,
+    "lon": 92.7176,
+    "mean_aqi": 34.765765765765764,
+    "AQI_Category": "Good"
+  },
+  {
+    "City": "Amaravati",
+    "lat": 16.5417,
+    "lon": 80.515,
+    "mean_aqi": 95.29964328180738,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Amritsar",
+    "lat": 31.634,
+    "lon": 74.8723,
+    "mean_aqi": 119.92095914742451,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Bengaluru",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "mean_aqi": 94.31832460732984,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Bhopal",
+    "lat": 23.2599,
+    "lon": 77.4126,
+    "mean_aqi": 132.8273381294964,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Brajrajnagar",
+    "lat": 21.82,
+    "lon": 83.92,
+    "mean_aqi": 150.2805049088359,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Chandigarh",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "mean_aqi": 96.49832775919732,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Chennai",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "mean_aqi": 114.50265392781316,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Coimbatore",
+    "lat": 11.0168,
+    "lon": 76.9558,
+    "mean_aqi": 73.02325581395348,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "mean_aqi": 259.48774387193595,
+    "AQI_Category": "Poor"
+  },
+  {
+    "City": "Ernakulam",
+    "lat": 9.9816,
+    "lon": 76.2999,
+    "mean_aqi": 92.359477124183,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Gurugram",
+    "lat": 28.4595,
+    "lon": 77.0266,
+    "mean_aqi": 225.12388162422573,
+    "AQI_Category": "Poor"
+  },
+  {
+    "City": "Guwahati",
+    "lat": 26.1445,
+    "lon": 91.7362,
+    "mean_aqi": 140.11111111111111,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Hyderabad",
+    "lat": 17.385,
+    "lon": 78.4867,
+    "mean_aqi": 109.20744680851064,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Jaipur",
+    "lat": 26.9124,
+    "lon": 75.7873,
+    "mean_aqi": 133.67915904936015,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Jorapokhar",
+    "lat": 23.7,
+    "lon": 86.4,
+    "mean_aqi": 159.25162127107652,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Kochi",
+    "lat": 9.9312,
+    "lon": 76.2673,
+    "mean_aqi": 104.28481012658227,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Kolkata",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "mean_aqi": 140.56631299734747,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Lucknow",
+    "lat": 26.8467,
+    "lon": 80.9462,
+    "mean_aqi": 217.973058637084,
+    "AQI_Category": "Poor"
+  },
+  {
+    "City": "Mumbai",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "mean_aqi": 105.35225806451614,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Patna",
+    "lat": 25.5941,
+    "lon": 85.1376,
+    "mean_aqi": 240.7820424948595,
+    "AQI_Category": "Poor"
+  },
+  {
+    "City": "Shillong",
+    "lat": 25.5788,
+    "lon": 91.8933,
+    "mean_aqi": 53.795121951219514,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Talcher",
+    "lat": 20.95,
+    "lon": 85.23,
+    "mean_aqi": 172.88681948424068,
+    "AQI_Category": "Moderate"
+  },
+  {
+    "City": "Thiruvananthapuram",
+    "lat": 8.5241,
+    "lon": 76.9366,
+    "mean_aqi": 75.87832699619771,
+    "AQI_Category": "Satisfactory"
+  },
+  {
+    "City": "Visakhapatnam",
+    "lat": 17.6868,
+    "lon": 83.2185,
+    "mean_aqi": 117.26985482493595,
+    "AQI_Category": "Moderate"
+  }
+]

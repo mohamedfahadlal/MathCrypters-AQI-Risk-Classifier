@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>India AQI Cluster Map</title>
+
+<link rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+body{margin:0;background:#020617;color:white}
+#map{height:100vh}
+.back{
+  position:absolute;
+  top:20px;left:20px;
+  padding:10px 16px;
+  background:#38bdf8;
+  color:#020617;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="back" onclick="location.href='/'">← Back to Home</div>
+<div id="map"></div>
+
+<script>
+const map = L.map("map",{
+  maxBounds:[[6,68],[36,98]],
+  minZoom:4
+}).setView([22.5,78.9],5);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+
+function getColor(category){
+  switch(category){
+    case "Good": return "#22c55e";
+    case "Satisfactory": return "#84cc16";
+    case "Moderate": return "#facc15";
+    case "Poor": return "#f97316";
+    case "Very Poor": return "#ef4444";
+    default: return "#64748b";
+  }
+}
+
+
+fetch("/api/clusters")
+.then(r => r.json())
+.then(data => {
+  data.forEach(c => {
+
+    const color = getColor(c.AQI_Category);
+
+    
+
+    L.circle([c.lat, c.lon], {
+      radius: 75000,        // 25 km influence zone
+      fillColor: color,
+      color: color,
+      weight: 1,
+      fillOpacity: 0.45
+    })
+    .addTo(map)
+    .bindPopup(`
+  <b>${c.City}</b><br>
+  Mean AQI: ${c.mean_aqi.toFixed(1)}<br>
+  Category: ${c.AQI_Category}
+`);
+
+  });
+});
+</script>
+
+</body>
+</html>

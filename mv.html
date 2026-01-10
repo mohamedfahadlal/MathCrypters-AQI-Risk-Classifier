@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AQI Predictor & Health Advisor</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui, Arial;
+  background:linear-gradient(135deg,#0f172a,#020617);
+  color:white;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header h1{margin:0}
+
+header button{
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  background:#38bdf8;
+  color:#020617;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  margin-top:40px;
+}
+
+.card{
+  background:#020617;
+  padding:24px;
+  border-radius:16px;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.card:hover{
+  transform: translateY(-6px);
+  box-shadow:0 30px 60px rgba(0,0,0,.7);
+}
+
+label{
+  font-size:13px;
+  color:#9ca3af;
+}
+
+input,select{
+  width:100%;
+  margin-top:6px;
+  margin-bottom:14px;
+  padding:10px;
+  border-radius:8px;
+  background:#0f172a;
+  border:1px solid #1f2937;
+  color:white;
+}
+
+.optional{
+  font-size:12px;
+  color:#9ca3af;
+}
+
+.action{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#020617;
+  font-size:16px;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
+}
+
+.score{
+  font-size:46px;
+  font-weight:800;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:20px;
+  margin-top:10px;
+}
+
+.low{background:#22c55e22;color:#22c55e}
+.mid{background:#facc1522;color:#facc15}
+.high{background:#ef444422;color:#ef4444}
+
+.note{
+  margin-top:14px;
+  font-size:13px;
+  color:#9ca3af;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <h1>AQI Predictor & Health Advisor</h1>
+  <button onclick="location.href='/map'">
+    View India AQI Cluster Map →
+  </button>
+</header>
+
+<div class="grid">
+
+<!-- INPUT CARD -->
+<div class="card">
+<h2>User Inputs</h2>
+
+
+<label>City</label>
+<select id="city">
+  <option>Ahmedabad</option>
+  <option>Aizawl</option>
+  <option>Amaravati</option>
+  <option>Amritsar</option>
+  <option>Bengaluru</option>
+  <option>Bhopal</option>
+  <option>Brajrajnagar</option>
+  <option>Chandigarh</option>
+  <option>Chennai</option>
+  <option>Coimbatore</option>
+  <option>Delhi</option>
+  <option>Ernakulam</option>
+  <option>Gurugram</option>
+  <option>Guwahati</option>
+  <option>Hyderabad</option>
+  <option>Jaipur</option>
+  <option>Jorapokhar</option>
+  <option>Kochi</option>
+  <option>Kolkata</option>
+  <option>Lucknow</option>
+  <option>Mumbai</option>
+  <option>Patna</option>
+  <option>Shillong</option>
+  <option>Talcher</option>
+  <option>Thiruvananthapuram</option>
+  <option>Visakhapatnam</option>
+</select>
+
+   
+
+<label>Health Condition</label>
+<select id="health">
+  <option value="1.0">Healthy</option>
+  <option value="1.3">Mild Respiratory Issue</option>
+  <option value="1.6">Asthma</option>
+  <option value="2.0">Severe Condition</option>
+</select>
+
+<label>Smoking Status</label>
+<select id="smoke">
+  <option value="1.0">Non-smoker</option>
+  <option value="1.2">Occasional smoker</option>
+  <option value="1.4">Regular smoker</option>
+</select>
+
+<label>Exposure Time (hours)</label>
+<input type="number" id="time" value="2">
+
+<label class="optional">Activity Intensity (optional)</label>
+<select id="activity">
+  <option value="1.0">Normal</option>
+  <option value="1.1">Walking</option>
+  <option value="1.3">Heavy activity</option>
+</select>
+
+<label class="optional">Peak Hour?</label>
+<select id="peak">
+  <option value="1.0">No</option>
+  <option value="1.3">Yes</option>
+</select>
+
+<button class="action" onclick="predict()">Predict AQI & Risk</button>
+</div>
+
+<!-- OUTPUT CARD -->
+<div class="card">
+<h2>Prediction & Health Advice</h2>
+
+<div class="score" id="score">—</div>
+<div class="badge" id="badge">Waiting for input</div>
+
+<div class="note" id="explain">
+Risk based on AQI severity, exposure time and personal sensitivity.
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+  /* ===== Helper animation function (TOP of script) ===== */
+function animateValue(el, start, end, duration = 800) {
+  let startTime = null;
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    el.innerText = (start + (end - start) * progress).toFixed(2);
+
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+/* ===== Your existing logic ===== */
+function predictAQI(city){
+  // existing code
+}
+
+function predict(){
+  // existing code
+  animateValue(score, 0, R);
+}
+/* -------- Mock ML AQI (replace later) -------- */
+fetch("/api/prediction")
+
+
+function predictAQI(city){
+  const meanAQI = {
+    Ahmedabad: 291.72,
+    Aizawl: 34.77,
+    Amaravati: 95.30,
+    Amritsar: 119.92,
+    Bengaluru: 94.32,
+    Bhopal: 132.83,
+    Brajrajnagar: 150.28,
+    Chandigarh: 96.50,
+    Chennai: 114.50,
+    Coimbatore: 73.02,
+    Delhi: 259.49,
+    Ernakulam: 92.36,
+    Gurugram: 225.12,
+    Guwahati: 140.11,
+    Hyderabad: 109.21,
+    Jaipur: 133.68,
+    Jorapokhar: 159.25,
+    Kochi: 104.28,
+    Kolkata: 140.57,
+    Lucknow: 217.97,
+    Mumbai: 105.35,
+    Patna: 240.78,
+    Shillong: 53.80,
+    Talcher: 172.89,
+    Thiruvananthapuram: 75.88,
+    Visakhapatnam: 117.27
+  };
+
+  return meanAQI[city] || 100;
+}
+
+
+function severity(A){
+  if(A<=50) return 0.5;
+  if(A<=100) return 1.0;
+  if(A<=200) return 1.5;
+  return 2.0;
+}
+
+function predict(){
+  const A = predictAQI(city.value);
+  const h = +health.value;
+  const s = +smoke.value;
+  const T = +time.value;
+  const f_act = +activity.value;
+  const w_peak = +peak.value;
+
+  let R = (A * severity(A) * h * T) / 100;
+  R *= s * f_act * w_peak;
+  R = Number(R.toFixed(2));
+
+  /* OPTIONAL: dynamic background */
+  document.body.style.background =
+    R < 2
+      ? "linear-gradient(135deg,#052e16,#020617)"
+      : R < 4
+      ? "linear-gradient(135deg,#78350f,#020617)"
+      : "linear-gradient(135deg,#450a0a,#020617)";
+
+  /* REQUIRED UI updates */
+  badge.className = "badge";     // reset badge
+  animateValue(score, 0, R);     // animated number
+
+  if (R < 2) {
+    badge.classList.add("low");
+    badge.innerText = "Low Risk – Safe";
+  } else if (R < 4) {
+    badge.classList.add("mid");
+    badge.innerText = "Moderate Risk – Limit exposure";
+  } else {
+    badge.classList.add("high");
+    badge.innerText = "High Risk – Avoid outdoor activity";
+  }
+}
+</script>
+</body>
+</html>
